@@ -1,0 +1,68 @@
+:root {
+  --blanco: #ffffff;
+  --oscuro: #212121;
+  --primario: #00a8ff;
+  --secundario: #FFC107;
+  --gris: #757575;
+  --grisClaro: #efeff5;
+  --primarioOscuro: #3C4858;
+  --rojo: #ff4757;
+  --rojobajo: #ff6b81;
+  --yellowbajo: #eccc68;
+  --success: #2ed573;
+  --successbajo: #e7faea;
+  --azul: #3742fa;
+  --azulbajo: #5352ed;
+
+}
+
+/* Tipografia */
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+h1,
+h2,
+h3 {
+  text-transform: uppercase;
+  text-align: center;
+  font-family: 'PT Sans', sans-serif;
+}
+
+/* Acelerando las animaciones */
+.fast {
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both
+}
+
+.cursorpointer {
+  cursor: pointer;
+}
+
+.btn-scrolltop {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  padding: 15px 20px;
+  background: #6f42c1;
+  color: white;
+  border: 1px solid white;
+  /* border-radius: 100%; */
+  cursor: pointer;
+  transform: translateY(100px);
+  transition: 0.3s;
+}
+
+.btn-scrolltop-on {
+  transform: translateY(0);
+}

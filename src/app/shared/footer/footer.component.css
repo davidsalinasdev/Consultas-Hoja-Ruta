@@ -1,0 +1,70 @@
+.barra {
+  padding: 1rem;
+}
+
+.titulo-objetivo {
+  color: var(--secundario);
+  font-weight: bold;
+}
+
+.derechos {
+  background-color: #2657c9;
+}
+
+.enlace-footer {
+  font-size: 1.1rem;
+}
+
+.enlace-footer:hover {
+  color: #FFC107 !important;
+}
+
+.enlace-derechos {
+  text-decoration: none;
+}
+
+.enlace-derechos:hover {
+  color: var(--secundario) !important;
+}
+
+.titulo-contacto {
+  color: var(--secundario);
+  font-size: 1.2rem;
+}
+
+.contacto-parrafo {
+  color: var(--blanco);
+}
+
+.contacto-enlace {
+  color: var(--blanco);
+}
+
+.contacto-enlace i {
+  font-size: 2.5rem;
+}
+
+.contacto-enlace i:hover {
+  color: var(--secundario);
+}
+
+.redes-sociales-footer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.copyright {
+  display: none;
+}
+
+@media (min-width: 576px) {
+  .copyright {
+    display: block;
+  }
+}
+
+.parrafo-gobernador {
+  text-align: justify;
+}

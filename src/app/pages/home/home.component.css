@@ -1,0 +1,9 @@
+.titulo-seguimiento {
+  font-size: 30px !important;
+}
+
+@media (min-width: 768px) {
+  .titulo-seguimiento {
+    font-size: 40px !important;
+  }
+}

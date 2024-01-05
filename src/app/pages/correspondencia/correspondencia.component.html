@@ -1,0 +1,600 @@
+<div class="col-12 mt-5 mb-3 text-center">
+  <h1 class="mb-0 titulo-tramitexterno">Seguimiento de trámites según hoja de ruta</h1>
+  <img src="../../../assets/img/serparador.png" alt="" width="180">
+</div>
+
+<div class="container p-4 p-md-0">
+
+  <!-- Formulario de consulta -->
+
+  <form [formGroup]="this.formulario" class="row justify-content-center" (submit)="this.onSubmit()">
+
+    <div class="col-12 col-md-8 col-lg-5 col-xl-4 p-sm-5">
+
+      <!-- Número de correspondencia -->
+      <mat-form-field class="example-full-width align-self-center" appearance="outline">
+        <mat-label>Ingrese su Número de Correspondencia</mat-label>
+        <input matInput formControlName="correspondencia">
+        <!-- Validacion -->
+        <!-- Preguntamos si es invalido y si esta sucio o a sido tocado -->
+        <mat-hint
+          *ngIf="this.correspondencia?.invalid && (this.correspondencia?.dirty || this.correspondencia?.touched)">
+          <!-- Errores con expresiones regulares -->
+          <div *ngIf="this.correspondencia?.hasError('required')"
+            class="animate__animated animate__fadeIn fast text-danger" id="">
+            Este campo es requerido.
+          </div>
+          <div *ngIf="this.correspondencia?.hasError('pattern')"
+            class="animate__animated animate__fadeIn fast text-danger" id="">
+            Este campo solo admite números
+          </div>
+        </mat-hint>
+      </mat-form-field>
+      <!-- FIN Número de correspondencia -->
+
+
+      <!-- Carnet de validacion -->
+      <mat-form-field class="example-full-width align-self-center" appearance="outline">
+        <mat-label>Ingrese su Carnet</mat-label>
+        <input matInput formControlName="carnet">
+        <!-- Validacion -->
+        <!-- Preguntamos si es invalido y si esta sucio o a sido tocado -->
+        <mat-hint *ngIf="this.carnet?.invalid && (this.carnet?.dirty || this.carnet?.touched)">
+          <!-- Errores con expresiones regulares -->
+          <div *ngIf="this.carnet?.hasError('required')" class="animate__animated animate__fadeIn fast text-danger"
+            id="">
+            Este campo es requerido.
+          </div>
+          <div *ngIf="this.carnet?.hasError('pattern')" class="animate__animated animate__fadeIn fast text-danger"
+            id="">
+            Este campo solo admite números, letras y guion.
+          </div>
+        </mat-hint>
+      </mat-form-field>
+      <!-- FIN Carnet de validacion -->
+
+
+      <!-- Boton enviar petición -->
+      <div class="btn-correspondencia d-grid gap-2 mt-3">
+        <button type="submit" [disabled]="this.formulario.invalid" class="btn btn-primary text-white">ENVIAR</button>
+      </div>
+
+    </div>
+
+  </form>
+
+
+  <!-- Loader para mostrar información -->
+  <div *ngIf="this.loader" class="d-flex flex-column align-items-center mt-4  animate__animated animate__fadeIn">
+    <span class="loader"></span>
+    <p>Espere por favor...</p>
+  </div>
+  <!-- FIN Loader para mostrar información -->
+
+  <!-- Tabla de datos lista de flujograma de estado de hoja de ruta -->
+  <div *ngIf="this.mostrarSeguimiento"
+    class="row justify-content-center mt-5 mb-4 animate__animated animate__fadeIn  fast">
+    <div class="col-12 col-md-12 col-lg-5" id="detalleSolicitud">
+      <h3>Detalle de solicitud</h3>
+      <hr>
+
+      <!-- Remitente Origen -->
+      <div class="card colorverdebajo">
+
+        <div class="card-header bg-verde  text-white">
+          DATOS ORIGEN
+        </div>
+
+
+        <div class="card-body">
+          <p class="mb-0">
+            <span class="text-primary">Remite origen: </span>
+            {{ this.listDetalleSeguimiento.nombreremitenteorigen }}
+          </p>
+          <p class="mb-0">
+            <span class="text-primary">Cargo: </span>
+            {{ this.listDetalleSeguimiento.cargodepinstremitenteorigen }}
+          </p>
+        </div>
+
+      </div>
+      <!-- FIN Remitente Origen -->
+
+      <!-- Validar la flecha roja -->
+      <div class="d-flex justify-content-center">
+        <img class="img-fluid" src="../../../assets/img/flecha.png" alt="" width="15">
+      </div>
+      <!-- FIN Validar la flecha roja -->
+
+      <!-- Destinatario jefe Archivado -->
+      <div *ngIf="this.listDetalleSeguimiento.archivado ==='t'; else notArchivadoJefe " class="card coloramarillobajo">
+
+        <div class="card-header">
+          <p class="mb-0">
+            <span class="text-primary">Referencia: </span>
+            {{ this.listDetalleSeguimiento.referenciaorigen }}
+
+          </p>
+        </div>
+
+        <div class="card-header bg-amarillo">
+          {{ this.listDetalleSeguimiento.nombreorgdestinatario }}
+        </div>
+
+        <div class="card-body">
+
+          <p class="mb-0">
+            <span class="text-primary">Cargo: </span>
+            {{ this.listDetalleSeguimiento.cargodestinatario }}
+          </p>
+
+          <p class="mb-0">
+            <span class="text-primary">Fecha y hora entrada: </span>
+            {{ this.listDetalleSeguimiento.fechaemisionrecep }} -
+            {{ this.listDetalleSeguimiento.horaemisionrecep }}
+          </p>
+
+          <p class="mb-0">
+            <span class="text-primary">Fecha y hora salida: </span>
+            {{ this.listDetalleSeguimiento.fechasalidaorigen }} -
+            {{ this.listDetalleSeguimiento.horasalidaorigen }}
+          </p>
+
+          <p class="mb-0">
+            <span class="text-primary">Telefono(s): </span>
+            {{ this.listDetalleSeguimiento.fonodestinatario }}
+          </p>
+
+        </div>
+
+        <div class="card-footer bg-amarillo">
+          <h3 class="titulo-archivado">Trámite Archivado..!</h3>
+        </div>
+
+      </div>
+      <!-- FIN Destinatario jefe Archivado -->
+
+      <!-- Destinatario jefe sin Archivado -->
+      <ng-template #notArchivadoJefe>
+        <div *ngIf="this.listDetalleSeguimiento.fechasalidaorigen != null; else notFechaSalida "
+          class="card colorverdebajo">
+
+          <div class="card-header">
+            <p class="mb-0">
+              <span class="text-primary">Referencia: </span>
+              {{ this.listDetalleSeguimiento.referenciaorigen }}
+
+            </p>
+          </div>
+
+          <div class="card-header bg-verde text-white">
+            {{ this.listDetalleSeguimiento.nombreorgdestinatario  }}
+          </div>
+
+
+          <div class="card-body">
+
+            <p class="mb-0">
+              <span class="text-primary">Cargo: </span>
+              {{ this.listDetalleSeguimiento.cargodestinatario }}
+            </p>
+
+            <p class="mb-0">
+              <span class="text-primary">Fecha y hora entrada: </span>
+              {{ this.listDetalleSeguimiento.fechaemisionrecep }} -
+              {{ this.listDetalleSeguimiento.horaemisionrecep }}
+            </p>
+
+            <p class="mb-0">
+              <span class="text-primary">Fecha y hora salida: </span>
+              {{ this.listDetalleSeguimiento.fechasalidaorigen }} -
+              {{ this.listDetalleSeguimiento.horasalidaorigen }}
+            </p>
+
+          </div>
+
+          <!-- Aqui la Logica Para N destinatarios -->
+
+          <div *ngIf="this.primeraLista.length===0" class="">
+            <div *ngIf="this.primeraListaNdestinatarios[0].recepcion.length > 1" class="">
+
+              <div class="card-footer">
+                <h2>IMPORTANTE..!</h2>
+                <div class="infoImportante">
+                  <span class="cant-destinos text-center align-self-center mb-2 mb-lg-0">Este trámite se derivó a:
+                    <span class="text-danger">{{ this.primeraListaNdestinatarios[0].recepcion.length}}
+                      Destinos.</span>
+                  </span>
+                  <button class="btn btn-outline-danger" (click)="this.verDestinos()">VER INFORMACIÓN <i
+                      class="bi bi-chevron-right"></i></button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- FIN Aqui la Logica Para N destinatarios -->
+        </div>
+
+        <ng-template #notFechaSalida>
+          <div class="card colorrojobajo">
+
+            <div class="card-header">
+              <p class="mb-0">
+                <span class="text-primary">Referencia: </span>
+                {{ this.listDetalleSeguimiento.referenciaorigen }}
+
+              </p>
+            </div>
+
+            <div class="card-header bg-rojo text-white">
+              {{ this.listDetalleSeguimiento.nombreorgdestinatario }}
+            </div>
+
+            <div class="card-body">
+
+              <p class="mb-0">
+                <span class="text-primary">Cargo: </span>
+                {{ this.listDetalleSeguimiento.cargodestinatario }}
+              </p>
+
+              <p class="mb-0">
+                <span class="text-primary">Fecha y hora entrada: </span>
+                {{ this.listDetalleSeguimiento.fechaemisionrecep }} -
+                {{ this.listDetalleSeguimiento.horaemisionrecep }}
+              </p>
+
+              <p class="mb-0">
+                <span class="text-primary">Fecha y hora salida: </span>
+                {{ this.listDetalleSeguimiento.fechasalidaorigen }} -
+                {{ this.listDetalleSeguimiento.horasalidaorigen }}
+              </p>
+            </div>
+          </div>
+        </ng-template>
+
+      </ng-template>
+      <!-- FIN destinatario jefe sin Archivado -->
+
+
+      <!-- Aqui la LOGICA de las N FILAS de la Hoja de Ruta -->
+      <div *ngIf="this.listDestinatarios != false" class="">
+
+
+
+        <!-- Validar la flecha roja -->
+        <div *ngIf="this.primeraLista.length != 0" class="">
+          <div *ngIf="this.listDetalleSeguimiento.fechasalidaorigen != null" class="d-flex justify-content-center">
+            <img class="img-fluid" src="../../../assets/img/flecha.png" alt="" width="15">
+          </div>
+        </div>
+        <!-- FIN Validar la flecha roja -->
+
+
+        <div *ngIf="this.viewNdestinos" class="">
+          <!-- Validar la flecha roja -->
+          <div *ngIf="this.listDetalleSeguimiento.fechasalidaorigen != null" class="d-flex justify-content-center">
+            <img class="img-fluid" src="../../../assets/img/flecha.png" alt="" width="15">
+          </div>
+          <!-- FIN Validar la flecha roja -->
+
+          <!-- Aqui la logica de para N destinatarios con derivacion -->
+          <div *ngIf="this.primeraLista.length===0" class=" d-flex justify-content-center">
+            <div *ngIf="this.primeraListaNdestinatarios[0].recepcion.length > 1" class="">
+
+              <ul class="listaPaginacion">
+                <li *ngFor="let item of this.primeraListaNdestinatarios[0].recepcion | paginate: { itemsPerPage: 1,
+                  currentPage: this.p, id:'primero' }">
+                </li>
+              </ul>
+
+              <pagination-controls id="primero" (pageChange)="this.cambioPaginaPrimero($event)" previousLabel="Anterior"
+                nextLabel="Siguiente">
+              </pagination-controls>
+
+            </div>
+          </div>
+        </div>
+        <!-- FIN Aqui la logica de para N destinatarios con derivacion -->
+
+
+        <!-- Recorrer los primeros -->
+        <div *ngIf="this.primeraLista.length != 0" class="">
+
+          <div *ngFor="let item of this.primeraLista; let i = index" class="">
+
+            <!-- Tramite archivado PRIMERA LISTA -->
+            <div *ngIf="item.arch === 't'; else notArchivado" class="card coloramarillobajo">
+
+              <!-- Sector observaciones -->
+              <div *ngIf="item.observacion === null || item.observacion ===''; else notObservacion">
+                <div class="card-header">
+                  <p class="mb-0">
+                    <span class="text-primary">Instructivo/Proveido: </span>
+                    {{ item.instruccionproveido }}
+                  </p>
+                </div>
+              </div>
+              <ng-template #notObservacion>
+                <div class="card-header">
+                  <p class="mb-0">
+                    <span class="text-primary">Instructivo/Proveido: </span>
+                    {{ item.instruccionproveido }}
+                  </p>
+                </div>
+                <div class="card-footer">
+                  <span class="text-primary">Observación de trámite: </span>
+                  {{ item.observacion }}
+                </div>
+              </ng-template>
+              <!-- FIN Sector observaciones -->
+
+              <div class="card-header bg-amarillo ">
+                {{ item.nombreorg }}
+              </div>
+
+              <div class="card-body">
+
+                <p class="mb-0">
+                  <span class="text-primary">Cargo: </span>
+                  {{ item.recepcion[0].nomcargo }}
+                </p>
+
+                <p class="mb-0">
+                  <span class="text-primary">Fecha y hora entrada: </span>
+                  {{ item.recepcion[0].fechaingreso}} -
+                  {{ item.recepcion[0].horaingreso  }}
+                </p>
+
+                <p class="mb-0">
+                  <span class="text-primary">Fecha y hora salida: </span>
+                  {{ item.recepcion[0].fechasalida}} -
+                  {{ item.recepcion[0].horasalida }}
+                </p>
+
+                <p class="mb-0">
+                  <span class="text-primary">Telefono(s): </span>
+                  {{ item.recepcion[0].telefonoorg}}
+                </p>
+
+              </div>
+
+              <div class="card-footer bg-amarillo">
+                <h3 class="titulo-archivado">Trámite Archivado..!</h3>
+              </div>
+
+            </div>
+            <!-- FIN Tramite archivado PRIMERA LISTA -->
+
+            <!-- Tramite no archivado  PRIMERA LISTA -->
+            <ng-template #notArchivado>
+
+              <!-- Validando Donde se encuentra el tramite -->
+              <div *ngIf="item.recepcion[0].fechasalida != null; else notSalida" class="card colorverdebajo">
+
+                <!-- Sector observaciones en tramite no archivado -->
+                <div *ngIf="item.observacion === null || item.observacion ===''; else notOBSnoArchivado">
+                  <div class="card-header">
+                    <p class="mb-0">
+                      <span class="text-primary">Instructivo/Proveido: </span>
+                      {{ item.instruccionproveido }}
+                    </p>
+                  </div>
+                </div>
+
+                <ng-template #notOBSnoArchivado>
+                  <div class="card-header">
+                    <p class="mb-0">
+                      <span class="text-primary">Instructivo/Proveido: </span>
+                      {{ item.instruccionproveido }}
+                    </p>
+                  </div>
+                  <div class="card-footer">
+                    <span class="text-primary">Observación de trámite: </span>
+                    {{ item.observacion }}
+                  </div>
+                </ng-template>
+                <!-- FIN Sector observaciones en tramite no archivado -->
+
+                <div class="card-header bg-verde text-white">
+                  {{ item.recepcion[0].nombreorg }}
+                </div>
+
+                <div class="card-body">
+
+                  <p class="mb-0">
+                    <span class="text-primary">Cargo: </span>
+                    {{ item.recepcion[0].nomcargo }}
+                  </p>
+
+                  <p class="mb-0">
+                    <span class="text-primary">Fecha y hora entrada: </span>
+                    {{ item.recepcion[0].fechaingreso}} -
+                    {{ item.recepcion[0].horaingreso  }}
+                  </p>
+
+                  <p class="mb-0">
+                    <span class="text-primary">Fecha y hora salida: </span>
+                    {{ item.recepcion[0].fechasalida}} -
+                    {{ item.recepcion[0].horasalida }}
+                  </p>
+
+                  <p class="mb-0">
+                    <span class="text-primary">Telefono(s): </span>
+                    {{ item.recepcion[0].telefonoorg}}
+                  </p>
+
+                </div>
+
+                <!-- Aqui la Logica Para N destinatarios -->
+                <div *ngIf="i === primeraListaUltimaPosicion" class="">
+
+                  <div *ngIf="this.primeraListaNdestinatarios[0].recepcion.length > 1" class="">
+
+                    <div class="card-footer">
+                      <h2>IMPORTANTE..!</h2>
+                      <div class="infoImportante">
+
+                        <span class="cant-destinos text-center align-self-center mb-2 mb-lg-0">Este trámite se derivó a:
+                          <span class="text-danger">{{ this.primeraListaNdestinatarios[0].recepcion.length}}
+                            Destinos.</span>
+                        </span>
+                        <button class="btn btn-outline-danger" (click)="this.verDestinosPrimero()">VER INFORMACIÓN <i
+                            class="bi bi-chevron-right"></i></button>
+
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- FIN Aqui la Logica Para N destinatarios -->
+
+              </div>
+
+              <ng-template #notSalida>
+                <div class="card colorrojobajo">
+
+                  <!-- Obsevacion en salida -->
+                  <div *ngIf="item.observacion === null || item.observacion ===''; else notOBSalida">
+                    <div class="card-header">
+                      <p class="mb-0">
+                        <span class="text-primary">Instructivo/Proveido: </span>
+                        {{ item.instruccionproveido }}
+                      </p>
+                    </div>
+                  </div>
+                  <ng-template #notOBSalida>
+                    <div class="card-header">
+                      <p class="mb-0">
+                        <span class="text-primary">Instructivo/Proveido: </span>
+                        {{ item.instruccionproveido }}
+                      </p>
+                    </div>
+                    <div class="card-footer">
+                      <span class="text-primary">Observación de trámite: </span>
+                      {{ item.observacion }}
+                    </div>
+                  </ng-template>
+                  <!-- FIN Observacion en salida -->
+
+                  <div class="card-header bg-rojo text-white">
+                    {{ item.recepcion[0].nombreorg }}
+                  </div>
+
+                  <div class="card-body">
+
+                    <p class="mb-0">
+                      <span class="text-primary">Cargo: </span>
+                      {{ item.recepcion[0].nomcargo }}
+                    </p>
+
+                    <p class="mb-0">
+                      <span class="text-primary">Fecha y hora entrada: </span>
+                      {{ item.recepcion[0].fechaingreso}} -
+                      {{ item.recepcion[0].horaingreso  }}
+                    </p>
+
+                    <p class="mb-0">
+                      <span class="text-primary">Fecha y hora salida: </span>
+                      {{ item.recepcion[0].fechasalida}} -
+                      {{ item.recepcion[0].horasalida }}
+                    </p>
+
+                    <p class="mb-0">
+                      <span class="text-primary">Telefono(s): </span>
+                      {{ item.recepcion[0].telefonoorg}}
+                    </p>
+
+                  </div>
+
+                </div>
+              </ng-template>
+
+
+
+              <!-- Configuracion Primer Boton -->
+              <div *ngIf="i+1 != this.primeraLista.length" class="">
+                <div *ngIf="item.recepcion[0].fechasalida != null" class="d-flex justify-content-center">
+                  <img class="img-fluid" src="../../../assets/img/flecha.png" alt="" width="15">
+                </div>
+              </div>
+
+
+
+              <div *ngIf="this.viewNdestinosPrimero" class="">
+                <!-- Validar la flecha roja -->
+                <div *ngIf="i+1 === this.primeraLista.length" class="">
+                  <div *ngIf="item.recepcion[0].fechasalida != null" class="d-flex justify-content-center">
+                    <img class="img-fluid" src="../../../assets/img/flecha.png" alt="" width="15">
+                  </div>
+                </div>
+
+                <!-- Aqui la logica de para N destinatarios con derivacion -->
+                <div *ngIf="i === primeraListaUltimaPosicion" class="d-flex justify-content-center">
+
+                  <div *ngIf="this.primeraListaNdestinatarios.length != 0" class="">
+
+                    <div *ngIf="this.primeraListaNdestinatarios[0].recepcion.length > 1" class="">
+                      <ul class="listaPaginacion">
+                        <li *ngFor="let item of this.primeraListaNdestinatarios[0].recepcion | paginate: { itemsPerPage: 1,
+                            currentPage: this.p, id:'segundo' }">
+                        </li>
+                      </ul>
+
+                      <pagination-controls id="segundo" (pageChange)="this.cambioPagina($event)"
+                        previousLabel="Anterior" nextLabel="Siguiente">
+                      </pagination-controls>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <!-- FIN Configuracion Primer Boton-->
+
+
+            </ng-template>
+            <!-- FIN Tramite no archivado PRIMERA LISTA -->
+
+          </div>
+          <!-- FIN ng-For -->
+
+          <div *ngIf="this.viewNdestinosPrimero" class="">
+            <div *ngIf="this.listDestinatarios != false && this.primeraListaNdestinatarios.length !=0 " class="">
+              <!-- Componente hijo destinatario -->
+              <!-- <div *ngIf="this.view===false; else viewDest " class="">
+                hola 2 -->
+              <app-destinatarios>{{ this.verDestinatario(this.tipoDestinatario) }}
+              </app-destinatarios>
+              <!-- </div> -->
+              <!-- Componente hijo destinatario -->
+
+              <!-- Componente hijo destinatario -->
+              <!-- <ng-template #viewDest>
+                <app-destinatarios></app-destinatarios>
+              </ng-template> -->
+              <!-- Componente hijo destinatario -->
+
+            </div>
+          </div>
+        </div>
+        <!-- Fin Recorrer los primeros -->
+
+      </div>
+      <!-- FIN Aqui la LOGICA de las N FILAS de la Hoja de Ruta -->
+      <div *ngIf="this.viewNdestinos" class="">
+        <div *ngIf="this.listDestinatarios != false " class="">
+          <div *ngIf="this.primeraLista.length===0" class="">
+            <app-destinatarios>{{ this.verDestinatario(this.tipoDestinatario) }}
+            </app-destinatarios>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!--FIN Tabla de datos lista de flujograma de estado de hoja de ruta -->
+
+</div>
+
+
+<app-footer></app-footer>

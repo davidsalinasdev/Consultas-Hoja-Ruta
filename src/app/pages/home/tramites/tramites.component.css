@@ -1,0 +1,101 @@
+.contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  /* grid-template-columns: 100%; */
+  grid-template-columns: repeat(2, 1fr);
+  /* Separacion de elementos */
+  gap: 0.5rem;
+  max-width: 120rem;
+}
+
+.producto {
+  background-color: var(--grisClaro);
+  padding: 0.5rem;
+  border-radius: 10px;
+  transition: all 0.25s;
+  box-shadow: 2px 4px 10px -6px rgba(0, 0, 0, .75);
+  background: rgb(62, 91, 170);
+  background: linear-gradient(90deg, rgba(62, 91, 170, 1) 0%, rgba(74, 105, 189, 1) 35%, rgba(89, 122, 214, 1) 100%);
+}
+
+.producto__nombre {
+  font-size: 0.9rem;
+  color: var(--blanco);
+  text-transform: uppercase;
+  font-weight: 300;
+  margin: 1rem 0;
+  text-align: center;
+  line-height: 1.2;
+}
+
+
+
+@media(min-width: 576px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Separacion de elementos */
+    /* column-gap: 2rem;
+    row-gap: 2rem; */
+    gap: 2rem;
+  }
+
+}
+
+@media(min-width: 768px) {
+  .grid {
+
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .producto {
+    background-color: var(--grisClaro);
+    padding: 0.8rem;
+    border-radius: 10px;
+    transition: all 0.25s;
+    box-shadow: 2px 4px 10px -6px rgba(0, 0, 0, .75);
+    background: rgb(62, 91, 170);
+    background: linear-gradient(90deg, rgba(62, 91, 170, 1) 0%, rgba(74, 105, 189, 1) 35%, rgba(89, 122, 214, 1) 100%);
+  }
+
+  .producto__nombre {
+    font-size: 1rem;
+    color: var(--blanco);
+    text-transform: uppercase;
+    font-weight: 300;
+    margin: 1rem 0;
+    text-align: center;
+    line-height: 1.2;
+  }
+}
+
+
+
+.producto__enlace {
+  text-decoration: none;
+
+}
+
+.producto__imagen {
+  /* La imagen Que se adapte a su contenedor */
+  width: 100%;
+}
+
+
+.producto:hover {
+  transform: translateY(-15px);
+  /* box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2); */
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.btn {
+  padding: 10px 15px !important;
+}
+
+/* Posicionar elementos con css grid */

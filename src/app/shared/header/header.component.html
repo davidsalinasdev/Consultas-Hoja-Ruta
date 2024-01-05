@@ -1,0 +1,39 @@
+<!-- El unico que no lleva row -->
+<!-- Menu navegación portal -->
+<nav class="navbar navbar-expand-lg navbar-dark barra-nav border-bottom">
+  <div class="container">
+
+    <a class=" navbar-brand" [routerLink]="[ '/home' ]">
+      <img class="img-fluid logo-gobernacion" src="../../../assets/img/logo-gobernacion.png" alt="Logo gobernación"
+        style="width: 300px;">
+    </a>
+
+    <!-- Menu hambuerguesa -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+      aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <!-- ms-auto:alinea a los elementos del menu a la derecha -->
+      <ul class="navbar-nav ms-auto my-2 my-lg-0" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+          <a class="nav-link nav-link--text" aria-current="page" [routerLink]="[ '/home' ]" routerLinkActive="active"><i
+              class="bi bi-house-fill"></i>
+            INICIO</a>
+
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-link--text" [routerLink]="[ '/home/acercade' ]" routerLinkActive="active"><i
+              class="bi bi-info-circle-fill"></i> ACERCA DE</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-link--text" [routerLink]="[ '/home/contactanos' ]" routerLinkActive="active"><i
+              class="bi bi-person-video3"></i> CONTACTANOS</a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,544 @@
+<div *ngFor="let item of  this.primeraLista; let i = index" class="">
+
+  <div *ngIf="i === 0; else notDestinatarios" class="">
+    <!-- Tramite archivado -->
+    <div *ngIf="item.arch === 't'; else notArchivado" class="card coloramarillobajo">
+
+      <!-- Sector observaciones -->
+      <div *ngIf="item.observacion === null || item.observacion ===''; else notObservacion">
+        <div class="card-header">
+          <p class="mb-0">
+            <span class="text-primary">Instructivo/Proveido: </span>
+            {{ item.instruccionproveido }}
+          </p>
+        </div>
+      </div>
+      <ng-template #notObservacion>
+        <div class="card-header">
+          <p class="mb-0">
+            <span class="text-primary">Instructivo/Proveido: </span>
+            {{ item.instruccionproveido }}
+          </p>
+        </div>
+        <div class="card-footer">
+          <span class="text-primary">Observación de trámite: </span>
+          {{ item.observacion }}
+        </div>
+      </ng-template>
+      <!-- FIN Sector observaciones -->
+
+      <div class="card-header bg-amarillo ">
+        {{ item.recepcion[this.tipoDestinatario].nombreorg}}
+      </div>
+
+      <div class="card-body">
+
+        <p class="mb-0">
+          <span class="text-primary">Cargo: </span>
+          {{ item.recepcion[this.tipoDestinatario].nomcargo }}
+        </p>
+
+        <p class="mb-0">
+          <span class="text-primary">Fecha y hora entrada: </span>
+          {{ item.recepcion[this.tipoDestinatario].fechaingreso}} -
+          {{ item.recepcion[this.tipoDestinatario].horaingreso  }}
+        </p>
+
+        <p class="mb-0">
+          <span class="text-primary">Fecha y hora salida: </span>
+          {{ item.recepcion[this.tipoDestinatario].fechasalida}} -
+          {{ item.recepcion[this.tipoDestinatario].horasalida }}
+        </p>
+
+        <p class="mb-0">
+          <span class="text-primary">Telefono(s): </span>
+          {{ item.recepcion[this.tipoDestinatario].telefonoorg}}
+        </p>
+
+      </div>
+
+      <div class="card-footer bg-amarillo">
+        <h3 class="titulo-archivado">Trámite Archivado...!</h3>
+      </div>
+
+    </div>
+    <!-- FIN Tramite archivadodsp -->
+
+    <!-- Tramite no archivado -->
+    <ng-template #notArchivado>
+
+      <!-- Validando Donde se encuentra el tramite -->
+      <div *ngIf="item.recepcion[this.tipoDestinatario].fechasalida != null; else notSalida"
+        class="card colorverdebajo">
+
+        <!-- Sector observaciones en tramite no archivado -->
+        <div *ngIf="item.observacion === null || item.observacion ===''; else notOBSnoArchivado">
+          <div class="card-header">
+            <p class="mb-0">
+              <span class="text-primary">Instructivo/Proveido: </span>
+              {{ item.instruccionproveido }}
+            </p>
+          </div>
+        </div>
+        <ng-template #notOBSnoArchivado>
+          <div class="card-header">
+            <p class="mb-0">
+              <span class="text-primary">Instructivo/Proveido: </span>
+              {{ item.instruccionproveido }}
+            </p>
+          </div>
+          <div class="card-footer">
+            <span class="text-primary">Observación de trámite: </span>
+            {{ item.observacion }}
+          </div>
+        </ng-template>
+        <!-- FIN Sector observaciones en tramite no archivado -->
+
+        <div class="card-header bg-verde text-white">
+          {{ item.recepcion[this.tipoDestinatario].nombreorg }}
+        </div>
+
+        <div class="card-body">
+
+          <p class="mb-0">
+            <span class="text-primary">Cargo: </span>
+            {{ item.recepcion[this.tipoDestinatario].nomcargo }}
+          </p>
+
+          <p class="mb-0">
+            <span class="text-primary">Fecha y hora entrada: </span>
+            {{ item.recepcion[this.tipoDestinatario].fechaingreso}} -
+            {{ item.recepcion[this.tipoDestinatario].horaingreso  }}
+          </p>
+
+          <p class="mb-0">
+            <span class="text-primary">Fecha y hora salida: </span>
+            {{ item.recepcion[this.tipoDestinatario].fechasalida}} -
+            {{ item.recepcion[this.tipoDestinatario].horasalida }}
+          </p>
+
+          <p class="mb-0">
+            <span class="text-primary">Telefono(s): </span>
+            {{ item.recepcion[this.tipoDestinatario].telefonoorg}}
+          </p>
+
+        </div>
+
+        <!-- Aqui la Logica Para N destinatarios -->
+        <div *ngIf="i === primeraListaUltimaPosicion" class="">
+
+          <div *ngIf="this.primeraListaNdestinatarios[0].recepcion.length > 1" class="">
+
+            <div class="card-footer">
+              <h2>IMPORTANTE..!</h2>
+              <div class="infoImportante">
+                <span class="cant-destinos text-center align-self-center mb-2 mb-lg-0">Este trámite se derivó a:
+                  <span class="text-danger">{{ this.primeraListaNdestinatarios[0].recepcion.length}}
+                    Destinos.</span>
+                </span>
+                <button class="btn btn-outline-danger" (click)="this.verDestinos()">VER INFORMACIÓN <i
+                    class="bi bi-chevron-right"></i></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- FIN Aqui la Logica Para N destinatarios -->
+
+      </div>
+
+      <ng-template #notSalida>
+        <div class="card colorrojobajo">
+
+          <!-- Obsevacion en salida -->
+          <div *ngIf="item.observacion === null || item.observacion ===''; else notOBSalida">
+            <div class="card-header">
+              <p class="mb-0">
+                <span class="text-primary">Instructivo/Proveido: </span>
+                {{ item.instruccionproveido }}
+              </p>
+            </div>
+          </div>
+          <ng-template #notOBSalida>
+            <div class="card-header">
+              <p class="mb-0">
+                <span class="text-primary">Instructivo/Proveido: </span>
+                {{ item.instruccionproveido }}
+              </p>
+            </div>
+            <div class="card-footer">
+              <span class="text-primary">Observación de trámite: </span>
+              {{ item.observacion }}
+            </div>
+          </ng-template>
+          <!-- FIN Observacion en salida -->
+
+          <div class="card-header bg-rojo text-white">
+            {{ item.recepcion[this.tipoDestinatario].nombreorg }}
+          </div>
+
+          <div class="card-body">
+
+            <p class="mb-0">
+              <span class="text-primary">Cargo: </span>
+              {{ item.recepcion[this.tipoDestinatario].nomcargo }}
+            </p>
+
+            <p class="mb-0">
+              <span class="text-primary">Fecha y hora entrada: </span>
+              {{ item.recepcion[this.tipoDestinatario].fechaingreso}} -
+              {{ item.recepcion[this.tipoDestinatario].horaingreso  }}
+            </p>
+
+            <p class="mb-0">
+              <span class="text-primary">Fecha y hora salida: </span>
+              {{ item.recepcion[this.tipoDestinatario].fechasalida}} -
+              {{ item.recepcion[this.tipoDestinatario].horasalida }}
+            </p>
+
+            <p class="mb-0">
+              <span class="text-primary">Telefono(s): </span>
+              {{ item.recepcion[this.tipoDestinatario].telefonoorg}}
+            </p>
+
+          </div>
+
+        </div>
+      </ng-template>
+      <!-- FIN Validando Donde se encuentra el tramite -->
+
+      <!-- Validar la flecha roja -->
+      <div *ngIf="item.recepcion[this.tipoDestinatario].fechasalida != null" class="d-flex justify-content-center">
+        <img class="img-fluid" src="../../../assets/img/flecha.png" alt="" width="15">
+      </div>
+      <!-- FIN Validar la flecha roja -->
+
+    </ng-template>
+
+
+    <!-- Aqui la logica de para N destinatarios con derivacion -->
+    <div *ngIf="i === primeraListaUltimaPosicion" class="">
+
+      <div *ngIf="this.primeraListaNdestinatarios.length != 0" class="d-flex justify-content-center">
+
+        <div *ngIf="this.primeraListaNdestinatarios[0].recepcion.length > 1" class="">
+          <ul class="listaPaginacion">
+            <li *ngFor="let item of this.primeraListaNdestinatarios[0].recepcion | paginate: { itemsPerPage: 1,
+                            currentPage: this.p, id:'primeroSeg' }">
+            </li>
+          </ul>
+
+          <pagination-controls id="primeroSeg" (pageChange)="this.cambioPaginaPrimero($event)" previousLabel="Anterior"
+            nextLabel="Siguiente">
+          </pagination-controls>
+        </div>
+      </div>
+
+    </div>
+    <!-- FIN Aqui la logica de para N destinatarios con derivacion -->
+
+    <!-- Components -->
+    <div *ngIf="i === primeraListaUltimaPosicion" class="">
+
+      <div *ngIf="this.primeraListaNdestinatarios.length != 0" class="">
+        <div *ngIf="this.primeraListaNdestinatarios[0].recepcion.length > 1" class="">
+          <!-- Componente hijo destinatario -->
+
+          <app-segundo-destinatario *ngIf="this.cont===0; else seguDestinatario">
+            {{ this.verDestinatario(this.tipoDestinatarioNivel) }}
+          </app-segundo-destinatario>
+          <!-- Componente hijo destinatario -->
+
+          <!-- Componente hijo destinatario -->
+          <ng-template #seguDestinatario>
+            <app-segundo-destinatario></app-segundo-destinatario>
+          </ng-template>
+
+          <!-- Componente hijo destinatario -->
+        </div>
+
+      </div>
+    </div>
+    <!-- Components -->
+
+
+
+
+    <!-- FIN Tramite no archivado -->
+  </div>
+
+  <ng-template #notDestinatarios>
+
+    <!-- Tramite archivado -->
+    <div *ngIf="item.arch === 't'; else notArchivado" class="card coloramarillobajo">
+
+      <!-- Sector observaciones -->
+      <div *ngIf="item.observacion === null || item.observacion ===''; else notObservacionn">
+        <div class="card-header">
+          <p class="mb-0">
+            <span class="text-primary">Instructivo/Proveido: </span>
+            {{ item.instruccionproveido }}
+          </p>
+        </div>
+      </div>
+      <ng-template #notObservacionn>
+
+        <div class="card-header">
+          <p class="mb-0">
+            <span class="text-primary">Instructivo/Proveido: </span>
+            {{ item.instruccionproveido }}
+          </p>
+        </div>
+        <div class="card-footer">
+          <span class="text-primary">Observación de trámite: </span>
+          {{ item.observacion }}
+        </div>
+      </ng-template>
+      <!-- FIN Sector observaciones -->
+
+      <div class="card-header bg-amarillo ">
+        {{ item.recepcion[0].nombreorg }}
+      </div>
+
+      <div class="card-body">
+
+        <p class="mb-0">
+          <span class="text-primary">Cargo: </span>
+          {{ item.recepcion[0].nomcargo }}
+        </p>
+
+        <p class="mb-0">
+          <span class="text-primary">Fecha y hora entrada: </span>
+          {{ item.recepcion[0].fechaingreso}} -
+          {{ item.recepcion[0].horaingreso  }}
+        </p>
+
+        <p class="mb-0">
+          <span class="text-primary">Fecha y hora salida: </span>
+          {{ item.recepcion[0].fechasalida}} -
+          {{ item.recepcion[0].horasalida }}
+        </p>
+
+        <p class="mb-0">
+          <span class="text-primary">Telefono(s): </span>
+          {{ item.recepcion[0].telefonoorg}}
+        </p>
+
+      </div>
+
+      <div class="card-footer bg-amarillo">
+        <h3 class="titulo-archivado">Trámite Archivado..!</h3>
+      </div>
+
+    </div>
+    <!-- FIN Tramite archivadodsp -->
+    <!-- Tramite no archivado -->
+    <ng-template #notArchivado>
+
+      <!-- Validando Donde se encuentra el tramite -->
+      <div *ngIf="item.recepcion[0].fechasalida != null; else notSalida" class="card colorverdebajo">
+
+        <!-- Sector observaciones en tramite no archivado -->
+        <div *ngIf="item.observacion === null || item.observacion ===''; else notOBSnoArchivado">
+          <div class="card-header">
+            <p class="mb-0">
+              <span class="text-primary">Instructivo/Proveido: </span>
+              {{ item.instruccionproveido }}
+            </p>
+          </div>
+        </div>
+        <ng-template #notOBSnoArchivado>
+          <div class="card-header">
+            <p class="mb-0">
+              <span class="text-primary">Instructivo/Proveido: </span>
+              {{ item.instruccionproveido }}
+            </p>
+          </div>
+          <div class="card-footer">
+            <span class="text-primary">Observación de trámite: </span>
+            {{ item.observacion }}
+          </div>
+        </ng-template>
+        <!-- FIN Sector observaciones en tramite no archivado -->
+
+        <div class="card-header bg-verde text-white">
+          {{ item.recepcion[0].nombreorg }}
+        </div>
+
+        <div class="card-body">
+
+          <p class="mb-0">
+            <span class="text-primary">Cargo: </span>
+            {{ item.recepcion[0].nomcargo }}
+          </p>
+
+          <p class="mb-0">
+            <span class="text-primary">Fecha y hora entrada: </span>
+            {{ item.recepcion[0].fechaingreso}} -
+            {{ item.recepcion[0].horaingreso  }}
+          </p>
+
+          <p class="mb-0">
+            <span class="text-primary">Fecha y hora salida: </span>
+            {{ item.recepcion[0].fechasalida}} -
+            {{ item.recepcion[0].horasalida }}
+          </p>
+
+          <p class="mb-0">
+            <span class="text-primary">Telefono(s): </span>
+            {{ item.recepcion[0].telefonoorg}}
+          </p>
+
+        </div>
+
+        <!-- Aqui la Logica Para N destinatarios -->
+        <div *ngIf="i === primeraListaUltimaPosicion" class="">
+
+          <div *ngIf="this.primeraListaNdestinatarios[0].recepcion.length > 1" class="">
+
+            <div class="card-footer">
+              <h2>IMPORTANTE..!</h2>
+              <div class="infoImportante">
+
+                <span class="cant-destinos text-center align-self-center mb-2 mb-lg-0">Este trámite se derivó a:
+                  <span class="text-danger">{{ this.primeraListaNdestinatarios[0].recepcion.length}}
+                    Destinos.</span>
+                </span>
+                <button class="btn btn-outline-danger" (click)="this.verDestinosPrimero()">VER INFORMACIÓN <i
+                    class="bi bi-chevron-right"></i></button>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- FIN Aqui la Logica Para N destinatarios -->
+
+      </div>
+
+      <!-- N destinatarios RED -->
+      <ng-template #notSalida>
+
+        <div class="card colorrojobajo">
+
+          <!-- Obsevacion en salida -->
+          <div *ngIf="item.observacion === null || item.observacion ===''; else notOBSalida">
+            <div class="card-header">
+              <p class="mb-0">
+                <span class="text-primary">Instructivo/Proveido: </span>
+                {{ item.instruccionproveido }}
+              </p>
+            </div>
+          </div>
+          <ng-template #notOBSalida>
+            <div class="card-header">
+              <p class="mb-0">
+                <span class="text-primary">Instructivo/Proveido: </span>
+                {{ item.instruccionproveido }}
+              </p>
+            </div>
+            <div class="card-footer">
+              <span class="text-primary">Observación de trámite: </span>
+              {{ item.observacion }}
+            </div>
+          </ng-template>
+          <!-- FIN Observacion en salida -->
+
+          <!-- Card Rojo Para N destinatarios -->
+          <div class="card-header bg-rojo text-white">
+            {{ item.recepcion[0].nombreorg }}
+          </div>
+
+          <div class="card-body">
+
+            <p class="mb-0">
+              <span class="text-primary">Cargo: </span>
+              {{ item.recepcion[0].nomcargo }}
+            </p>
+
+            <p class="mb-0">
+              <span class="text-primary">Fecha y hora entrada: </span>
+              {{ item.recepcion[0].fechaingreso}} -
+              {{ item.recepcion[0].horaingreso  }}
+            </p>
+
+            <p class="mb-0">
+              <span class="text-primary">Fecha y hora salida: </span>
+              {{ item.recepcion[0].fechasalida}} -
+              {{ item.recepcion[0].horasalida }}
+            </p>
+
+            <p class="mb-0">
+              <span class="text-primary">Telefono(s): </span>
+              {{ item.recepcion[0].telefonoorg}}
+            </p>
+
+          </div>
+          <!-- FIN Card Rojo Para N destinatarios -->
+
+        </div>
+
+        <!-- Aqui era -->
+
+      </ng-template>
+      <!-- FIN N destinatarios RED -->
+
+      <!-- Validar la flecha roja -->
+      <div *ngIf="item.recepcion[0].fechasalida != null" class="d-flex justify-content-center">
+        <img class="img-fluid" src="../../../assets/img/flecha.png" alt="" width="15">
+      </div>
+      <!-- FIN Validar la flecha roja -->
+
+    </ng-template>
+
+
+    <!-- Aqui la logica de para N destinatarios con derivacion -->
+    <div *ngIf="i === primeraListaUltimaPosicion" class="d-flex justify-content-center">
+
+      <div *ngIf="this.primeraListaNdestinatarios.length != 0" class="">
+        <div *ngIf="this.primeraListaNdestinatarios[0].recepcion.length > 1" class="">
+          <ul class="listaPaginacion">
+            <li *ngFor="let item of this.primeraListaNdestinatarios[0].recepcion | paginate: { itemsPerPage: 1,
+                            currentPage: this.p, id:'cuarto1' }">
+            </li>
+          </ul>
+          <pagination-controls id="cuarto1" (pageChange)="this.cambioPagina($event)" previousLabel="Anterior"
+            nextLabel="Siguiente">
+          </pagination-controls>
+        </div>
+      </div>
+
+    </div>
+    <!-- FIN Aqui la logica de para N destinatarios con derivacion -->
+
+    <!-- Components -->
+
+    <div *ngIf="i === primeraListaUltimaPosicion" class="">
+
+      <div *ngIf="this.primeraListaNdestinatarios.length != 0" class="">
+        <div *ngIf="this.primeraListaNdestinatarios[0].recepcion.length > 1" class="">
+          <!-- Componente hijo destinatario -->
+
+          <app-segundo-destinatario *ngIf="this.cont===0; else todo">
+            {{ this.verDestinatario(this.tipoDestinatarioNivel) }}
+          </app-segundo-destinatario>
+          <!-- Componente hijo destinatario -->
+          <!-- Componente hijo destinatario -->
+          <ng-template #todo>
+            <app-segundo-destinatario></app-segundo-destinatario>
+          </ng-template>
+          <!-- Componente hijo destinatario -->
+
+        </div>
+      </div>
+    </div>
+    <!-- Components -->
+
+
+
+
+    <!-- FIN Tramite no archivado -->
+  </ng-template>
+
+
+</div>

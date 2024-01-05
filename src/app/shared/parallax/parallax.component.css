@@ -1,0 +1,116 @@
+.hero-image-1 {
+  /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+  background-image:
+    url("../../../assets/img/terceraIMG.jpg");
+
+  /* Set a specific height */
+  height: 50vh;
+
+  /* Position and center the image to scale nicely on all screens */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+}
+
+.hero-image-2 {
+  /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+  background-image:
+    url("../../../assets/img/PrimeraIMG4.jpg");
+
+  /* Set a specific height */
+  height: 50vh;
+
+  /* Position and center the image to scale nicely on all screens */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+}
+
+.hero-image-3 {
+  /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+  background-image:
+    url("../../../assets/img/PrimeraIMGtablet.jpg");
+
+  /* Set a specific height */
+  height: 50vh;
+
+  /* Position and center the image to scale nicely on all screens */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+}
+
+@media (min-width:768px) {
+  .hero-image-1 {
+    height: 70vh;
+  }
+
+  .hero-image-2 {
+    height: 70vh;
+  }
+
+  .hero-image-3 {
+    height: 70vh;
+  }
+
+}
+
+/* Place text in the middle of the image */
+.hero-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  transform: translate(-50%, -50%);
+  color: black;
+}
+
+@media (min-width: 768px) {
+  .hero-text {
+    top: 35%;
+    width: 80%;
+  }
+}
+
+.iconos {
+  font-size: 1.2rem;
+  padding: 0.7rem 1rem;
+  background-color: rgb(209, 204, 204);
+}
+
+.iconos:hover {
+  background-color: rgb(54, 54, 54);
+}
+
+.titulo-hero {
+  font-family: 'PT Sans',
+    sans-serif;
+  color: var(--blanco);
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 30px !important;
+}
+
+@media (min-width: 768px) {
+  .titulo-hero {
+    font-size: 48px !important;
+  }
+}
+
+.hero-text--modificador {
+  background-color: #2121219f;
+  padding: 2rem 3rem;
+  border-radius: 15px;
+  text-shadow: black 0.1rem 0.1rem 0.2rem;
+
+}

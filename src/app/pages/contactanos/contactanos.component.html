@@ -1,0 +1,57 @@
+<!--Componente Parallax -->
+<app-parallax></app-parallax>
+
+
+<!-- Titulo para acerca de.. -->
+<div class="col-12 mt-5 mb-3 text-center">
+  <h1 class="mb-0 titulo-seguimiento">Contáctanos</h1>
+  <img src="../../../assets/img/serparador.png" alt="" width="180">
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+
+    <div class="col-12 col-xl-6 text-center">
+      <h2 class="text-dark text-center">NUESTRA UBICACIÓN</h2>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1600.7466704955843!2d-66.15988873050641!3d-17.400330626768916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93e373409e82b9ff%3A0x8d9a5c3d04702c3f!2sGobierno%20Aut%C3%B3nomo%20Departamental%20de%20Cochabamba%20(Gobernaci%C3%B3n%20de%20Cochabamba!5e0!3m2!1ses-419!2sbo!4v1663775344917!5m2!1ses-419!2sbo"
+        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <div class="col-12 col-xl-6 text-center">
+      <h2 class="text-dark text-center">INFORMACIONES</h2>
+      <p class="titulo-contacto"><i class="bi bi-house-fill"></i> Nuestra dirección es:</p>
+      <p class="contacto-parrafo text-center">Av. Aroma N°: O-327 - Plaza San Sebastián Edicifio del Organo Ejecutivo.
+      </p>
+
+      <p class="titulo-contacto"><i class="bi bi-telephone-fill"></i> Nuestros teléfonos son:</p>
+      <p class="contacto-parrafo">Tel.: 591 4 4500530<br>
+        Cel.: 61676994</p>
+
+      <!-- <p class="titulo-contacto"><i class="bi bi-envelope-fill"></i> Nuestros correos son:</p>
+      <p class="contacto-parrafo">Email: gobernaciondecochabamba@gobernaciondecochab</p> -->
+
+      <p class="titulo-contacto"><i class="bi bi-share-fill"></i> Puedes seguirnos tambien en:</p>
+      <div class="redes-sociales-footer">
+        <a class="contacto-enlace" href="https://www.facebook.com/GobernacionDeCochabamba" target="_blank"><i
+            class="bi bi-facebook"></i></a>
+        <a class="contacto-enlace" href="https://twitter.com/GobernacionCbba" target="_blank"><i
+            class="bi bi-twitter"></i></a>
+        <a class="contacto-enlace" href="https://gobernaciondecochabamba.bo/instagram.com?hl=es-la" target="_blank"><i
+            class="bi bi-instagram"></i></a>
+        <a class="contacto-enlace" href="https://www.youtube.com/channel/UCi9ScsXo7rULoT_4Vxt3NYg" target="_blank"><i
+            class="bi bi-youtube"></i></a>
+      </div>
+
+      <div class="mt-4 cursorpointer" [routerLink]="[ '/home' ]">
+        <img class="img-fluid" src="../../../assets/img/logo-gobernacionegro.png" alt="Logo gobernación">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Pie de pagina -->
+<app-footer></app-footer>

@@ -1,0 +1,7 @@
+{
+  "/api/*": {
+    "target": "http://portal-ciudadano.gobernaciondecochabamba.bo",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}
