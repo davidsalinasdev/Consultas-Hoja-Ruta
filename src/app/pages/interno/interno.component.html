@@ -1,23 +1,27 @@
 <!-- Menu -->
-<app-header></app-header>
+<app-header-interno></app-header-interno>
 
 <div class="col-12 mt-5 mb-3 text-center">
-  <h1 class="mb-0 titulo-tramitexterno">Seguimiento de trámites según hoja de ruta</h1>
+  <h1 class="mb-0 titulo-tramitexterno">Seguimiento a trámites según hoja de ruta</h1>
   <img src="../../../assets/img/serparador.png" alt="" width="180">
 </div>
 
 <div class="container p-4 p-md-0">
 
   <!-- Formulario de consulta -->
-
-  <form [formGroup]="this.formulario" class="row justify-content-center" (submit)="this.onSubmit()">
+  <form #formDirective="ngForm" [formGroup]="this.formulario" class="row justify-content-center"
+    (submit)="this.onSubmit()">
 
     <div class="col-12 col-md-8 col-lg-5 col-xl-4 p-sm-5">
 
       <!-- Número de correspondencia -->
       <mat-form-field class="example-full-width align-self-center" appearance="outline">
         <mat-label>Ingrese su Número de Correspondencia</mat-label>
-        <input matInput formControlName="correspondencia">
+        <div id="correspondenciaContainer">
+          <input type="number" matInput formControlName="correspondencia"
+            (input)="this.onInputChangeNroCorrespondencia($event)" [value]="this.correspondenciaValue"
+            id="correspondenciaId" (click)="this.onClickCorrespondencia($event)" autocomplete="off">
+        </div>
         <!-- Validacion -->
         <!-- Preguntamos si es invalido y si esta sucio o a sido tocado -->
         <mat-hint
@@ -35,11 +39,13 @@
       </mat-form-field>
       <!-- FIN Número de correspondencia -->
 
-
       <!-- Carnet de validacion -->
       <mat-form-field class="example-full-width align-self-center" appearance="outline">
         <mat-label>Ingrese su Carnet</mat-label>
-        <input matInput formControlName="carnet">
+        <div id="carnetContainer">
+          <input matInput formControlName="carnet" (input)="this.onInputChangeCarnet($event)"
+            (click)="this.onClickCarnet($event)" [value]="this.carnetValue" id="carnetId" autocomplete="off">
+        </div>
         <!-- Validacion -->
         <!-- Preguntamos si es invalido y si esta sucio o a sido tocado -->
         <mat-hint *ngIf="this.carnet?.invalid && (this.carnet?.dirty || this.carnet?.touched)">
@@ -58,14 +64,15 @@
 
 
       <!-- Boton enviar petición -->
-      <div class="btn-correspondencia d-grid gap-2 mt-3">
-        <button type="submit" [disabled]="this.formulario.invalid" class="btn btn-primary text-white">ENVIAR</button>
+      <div class="button-container">
+        <button type="button" (click)="this.limpiarConsulta(formDirective)"
+          class="btn btn-danger text-uppercase">Limpiar</button>
+        <button type="submit" class="btn btn-primary text-white text-uppercase">Consultar</button>
       </div>
 
     </div>
 
   </form>
-
 
   <!-- Loader para mostrar información -->
   <div *ngIf="this.loader" class="d-flex flex-column align-items-center mt-4  animate__animated animate__fadeIn">
@@ -74,11 +81,16 @@
   </div>
   <!-- FIN Loader para mostrar información -->
 
+  <div style="text-align:center">
+    <div id="simple-keyboard-correspondencia" class="simple-keyboard"></div>
+    <div id="simple-keyboard-carnet" class="simple-keyboard"></div>
+  </div>
+
   <!-- Tabla de datos lista de flujograma de estado de hoja de ruta -->
-  <div *ngIf="this.mostrarSeguimiento"
-    class="row justify-content-center mt-5 mb-4 animate__animated animate__fadeIn  fast">
+  <div *ngIf="this.mostrarSeguimiento" class="row justify-content-center  mb-4 animate__animated animate__fadeIn  fast">
     <div class="col-12 col-md-12 col-lg-5" id="detalleSolicitud">
-      <h3>Detalle de solicitud</h3>
+      <br>
+      <p class="text-center text-uppercase" style="width:100%;">Descripción detallada de su solicitud</p>
       <hr>
 
       <!-- Remitente Origen -->
@@ -554,7 +566,6 @@
               </div>
               <!-- FIN Configuracion Primer Boton-->
 
-
             </ng-template>
             <!-- FIN Tramite no archivado PRIMERA LISTA -->
 
@@ -600,4 +611,4 @@
 </div>
 
 
-<app-footer></app-footer>
+<!-- <app-footer></app-footer> -->

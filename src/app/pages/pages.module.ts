@@ -11,6 +11,7 @@ import { PagesComponent } from './pages.component';
 import { HomeComponent } from './home/home.component';
 import { CorrespondenciaComponent } from './correspondencia/correspondencia.component';
 import { AcercaComponent } from './acerca/acerca.component';
+import { InternoComponent } from './interno/interno.component';
 
 // Modulo personalizado SHARED
 import { SharedModule } from '../shared/shared.module';
@@ -37,7 +38,8 @@ import { ConsultarComponent } from './consultar/consultar.component';
     CorrespondenciaComponent,
     AcercaComponent,
     ContactanosComponent,
-    ConsultarComponent
+    ConsultarComponent,
+    InternoComponent
   ],
   imports: [
     CommonModule,

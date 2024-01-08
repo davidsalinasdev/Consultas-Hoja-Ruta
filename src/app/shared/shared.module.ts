@@ -6,12 +6,14 @@ import { RouterModule } from "@angular/router";
 import { HeaderComponent } from './header/header.component';
 import { ParallaxComponent } from './parallax/parallax.component';
 import { FooterComponent } from './footer/footer.component';
+import { HeaderInternoComponent } from './header-interno/header-interno.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     ParallaxComponent,
-    FooterComponent
+    FooterComponent,
+    HeaderInternoComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { FooterComponent } from './footer/footer.component';
   exports: [
     HeaderComponent,
     ParallaxComponent,
-    FooterComponent
+    FooterComponent,
+    HeaderInternoComponent
   ]
 })
 export class SharedModule { }

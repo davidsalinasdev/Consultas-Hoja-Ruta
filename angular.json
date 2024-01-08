@@ -14,7 +14,8 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "sweetalert2"
+              "sweetalert2",
+              "simple-keyboard"
             ],
             "outputPath": "dist/portalciudadano",
             "index": "src/index.html",

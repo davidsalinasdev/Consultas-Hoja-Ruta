@@ -1,3 +1,5 @@
+@import 'simple-keyboard/build/css/index.css';
+
 :root {
   --blanco: #ffffff;
   --oscuro: #212121;

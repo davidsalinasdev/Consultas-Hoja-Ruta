@@ -21,13 +21,15 @@ import { CuartoDestinatarioComponent } from './cuarto-destinatario/cuarto-destin
     TercerDestinatarioComponent,
     CuartoDestinatarioComponent,
 
+
   ],
   imports: [
     CommonModule,
     NgxPaginationModule
   ],
   exports: [
-    DestinatariosComponent
+    DestinatariosComponent,
+
   ]
 })
 export class ComponentsModule { }

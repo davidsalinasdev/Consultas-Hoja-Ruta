@@ -26,6 +26,7 @@
     "ngx-pagination": "^6.0.2",
     "ngx-toastr": "^15.0.0",
     "rxjs": "~7.5.0",
+    "simple-keyboard": "^3.7.41",
     "sweetalert2": "^11.4.28",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
