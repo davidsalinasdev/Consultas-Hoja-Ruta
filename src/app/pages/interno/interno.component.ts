@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DestinatariosService } from 'src/app/services/destinatarios.service';
 
 import Keyboard from "simple-keyboard";
+import { throwError } from 'rxjs';
 
 // Utilizando jquery
 declare var JQuery: any;
@@ -100,10 +101,7 @@ export class InternoComponent implements OnInit {
       top: 0,
       behavior: 'auto'
     });
-
-
     this.crearFormulario();
-
   }
 
   /**
@@ -135,113 +133,125 @@ export class InternoComponent implements OnInit {
       carnet: this.nro_carnet
     }
 
-    // Mostrar Loader
-    this.loader = true;
-    this.mostrarSeguimiento = false;
+    console.log(formData);
+    if ((this.nro_correspondencia === undefined || this.nro_correspondencia === '') ||
+      (this.nro_carnet === undefined || this.nro_carnet === '')) {
+      // Tu código aquí si la condición es verdadera
+      Swal.fire({
+        icon: 'error',
+        title: 'Solicitud Inválida',
+        text: 'Ningun campo debe estar vacio.',
+        footer: 'Sistema de Seguimiento a Trámitese'
+      })
+    } else {
+      // Mostrar Loader
+      this.loader = true;
+      this.mostrarSeguimiento = false;
 
-    // Peticion http
-    this.correspondenciaServices.listaSeguimiento(formData)
-      .subscribe(({ destinatario, detalleSeguimiento, status }) => {
+      // Peticion http
+      this.correspondenciaServices.listaSeguimiento(formData)
+        .subscribe(({ destinatario, detalleSeguimiento, status }) => {
 
-        // this.correspondencia?.reset();
-        // this.carnet?.reset();
+          // console.log(status);
+          this.listDestinatarios = [];
+          this.primeraLista = [];
+          this.primeraListaNdestinatarios = [];
+          this.primeraListaNdestinatarios2 = [];
+          this.primerReemplazo = [];
+          this.p = 1;
+          this.viewNdestinos = false;
+          this.viewNdestinosPrimero = false;
+          this.tipoDestinatario = 0;
+          // this.view = false;
+          this.cont = 0;
+          if (status === 'success') {
 
-        // console.log(detalleSeguimiento);
-        // console.log(destinatario);
-
-        // console.log(status);
-        this.listDestinatarios = [];
-        this.primeraLista = [];
-        this.primeraListaNdestinatarios = [];
-        this.primeraListaNdestinatarios2 = [];
-        this.primerReemplazo = [];
-        this.p = 1;
-        this.viewNdestinos = false;
-        this.viewNdestinosPrimero = false;
-        this.tipoDestinatario = 0;
-        // this.view = false;
-        this.cont = 0;
-        if (status === 'success') {
-
-          // Logica para N destinatarios
-          if (destinatario != false) {
-            this.cantidadDestinatarios = destinatario[0].recepcion.length;
-            this.cantidadRecepcionistas = destinatario[0].recepcion;
-
-          } else {
-            this.cantidadDestinatarios = 0;
-          }
-
-          this.listDetalleSeguimiento = detalleSeguimiento[0];
-
-          if (this.listDetalleSeguimiento.nombretipo === "Comunicacion Externa") {
-
-            // Destruimos los teclados virtuales
-            this.keyboardCorrespondencia?.destroy();
-            this.keyboardCarnet?.destroy();
-
-            // Esperar a que la vista se actualice antes de desplazar
-            setTimeout(() => {
-              // Obtener el elemento con el id "miElemento"
-              const elemento = document.getElementById('detalleSolicitud');
-
-              if (elemento) {
-                // Desplazar hacia el elemento
-                elemento.scrollIntoView({ behavior: 'smooth' });  // Puedes usar 'smooth' en lugar de 'auto' para un desplazamiento suave
-              }
-            }, 0);
-
-            this.toastr.success('SEGUIMIENTO A TRÁMITES', 'Solicitud Encontrada..!');
-
-            // Mostrar loader
-            this.loader = false;
-
-            // Muestra toda la informacion solicitada
-            this.mostrarSeguimiento = true;
-
+            // Logica para N destinatarios
             if (destinatario != false) {
-
-              let contador: number = 0;
-              let contadorPocicion: number = 0;
-
-              this.listDestinatarios = destinatario;
-
-              // console.log(this.listDestinatarios);
-
-              // Genarar PRIMERA lISTA de destinatarios
-              this.listDestinatarios.forEach((element: any, index: any) => {
-
-                if (element.recepcion.length > 1 && contadorPocicion === 0) {
-                  this.posicion = index;
-                  contadorPocicion++;
-                }
-
-                if (element.recepcion.length > 1) {
-                  contador++;
-                }
-
-                if (element.recepcion.length === 1 && contador === 0) {
-                  this.primeraLista.push(element);
-                } else {
-                  this.primeraListaNdestinatarios.push(element);
-                }
-
-              });
-              // console.log(this.primeraLista.length);
-
-              if (this.primeraLista.length != 0) {
-                this.primeraListaUltimaPosicion = this.primeraLista.length - 1;
-              } else {
-                this.primeraListaUltimaPosicion = this.primeraLista.length;
-              }
-
-              // console.log(this.primeraLista);
-              // console.log(this.primeraListaNdestinatarios);
-
-              // FIN Genarar PRIMERA LISTA de destinatarios
-
+              this.cantidadDestinatarios = destinatario[0].recepcion.length;
+              this.cantidadRecepcionistas = destinatario[0].recepcion;
             } else {
-              this.listDestinatarios = false;
+              this.cantidadDestinatarios = 0;
+            }
+
+            this.listDetalleSeguimiento = detalleSeguimiento[0];
+
+            if (this.listDetalleSeguimiento.nombretipo === "Comunicacion Externa") {
+
+              // Destruimos los teclados virtuales
+              this.keyboardCorrespondencia?.destroy();
+              this.keyboardCarnet?.destroy();
+
+              // Esperar a que la vista se actualice antes de desplazar
+              setTimeout(() => {
+                // Obtener el elemento con el id "miElemento"
+                const elemento = document.getElementById('detalleSolicitud');
+
+                if (elemento) {
+                  // Desplazar hacia el elemento
+                  elemento.scrollIntoView({ behavior: 'smooth' });  // Puedes usar 'smooth' en lugar de 'auto' para un desplazamiento suave
+                }
+              }, 0);
+
+              this.toastr.success('SEGUIMIENTO A TRÁMITES', 'Solicitud Encontrada..!');
+
+              // Mostrar loader
+              this.loader = false;
+
+              // Muestra toda la informacion solicitada
+              this.mostrarSeguimiento = true;
+
+              if (destinatario != false) {
+
+                let contador: number = 0;
+                let contadorPocicion: number = 0;
+
+                this.listDestinatarios = destinatario;
+
+                // console.log(this.listDestinatarios);
+
+                // Genarar PRIMERA lISTA de destinatarios
+                this.listDestinatarios.forEach((element: any, index: any) => {
+
+                  if (element.recepcion.length > 1 && contadorPocicion === 0) {
+                    this.posicion = index;
+                    contadorPocicion++;
+                  }
+
+                  if (element.recepcion.length > 1) {
+                    contador++;
+                  }
+
+                  if (element.recepcion.length === 1 && contador === 0) {
+                    this.primeraLista.push(element);
+                  } else {
+                    this.primeraListaNdestinatarios.push(element);
+                  }
+
+                });
+                // console.log(this.primeraLista.length);
+
+                if (this.primeraLista.length != 0) {
+                  this.primeraListaUltimaPosicion = this.primeraLista.length - 1;
+                } else {
+                  this.primeraListaUltimaPosicion = this.primeraLista.length;
+                }
+
+                // FIN Genarar PRIMERA LISTA de destinatarios
+
+              } else {
+                this.listDestinatarios = false;
+              }
+            } else {
+              // Mostrar loader
+              this.loader = false;
+              this.mostrarSeguimiento = false;
+              Swal.fire({
+                icon: 'error',
+                title: 'Solicitud Inválida',
+                text: 'No es una comunicación externa..!',
+                footer: 'Sistema de Seguimiento a Trámitese'
+              })
             }
           } else {
             // Mostrar loader
@@ -250,42 +260,25 @@ export class InternoComponent implements OnInit {
             Swal.fire({
               icon: 'error',
               title: 'Solicitud Inválida',
-              text: 'No es una comunicación externa..!',
-              footer: 'Sistema de Seguimiento a Trámitese'
+              text: 'Credenciales incorrectas..!',
+              footer: 'Sistema de Seguimiento a Trámites'
             })
           }
-        } else {
-          // Mostrar loader
+
+        }, (err) => {
           this.loader = false;
           this.mostrarSeguimiento = false;
           Swal.fire({
             icon: 'error',
             title: 'Solicitud Inválida',
-            text: 'Credenciales incorrectas..!',
+            text: 'Datos Incorrectos!',
             footer: 'Sistema de Seguimiento a Trámites'
           })
         }
+        );
 
-      }, (err) => {
-        this.loader = false;
-        this.mostrarSeguimiento = false;
-        Swal.fire({
-          icon: 'error',
-          title: 'Solicitud Inválida',
-          text: 'Datos Incorrectos!',
-          footer: 'Sistema de Seguimiento a Trámites'
-        })
-      }
-      );
+    }
 
-    // Para la primera iteración
-    // if (this.contVerDestinatario === 0) {
-    //   this.verDestinatario(0);
-    //   console.log('hola');
-
-    //   this.contVerDestinatario++;
-    // }
-    // FIN Para la primera iteración
   }
 
   /**
@@ -405,7 +398,7 @@ export class InternoComponent implements OnInit {
       onChange: input => this.onChangeCorrespondencia(input),
       onKeyPress: button => this.onKeyPressCorrespondencia(button),
       display: {
-        '{bksp}': 'atras-borrar',
+        '{bksp}': 'borrar',
         '{enter}': '< enter',
         '@': 'at',
       },
@@ -423,7 +416,7 @@ export class InternoComponent implements OnInit {
       onChange: input => this.onChangeCorrespondencia(input),
       onKeyPress: button => this.onKeyPressCorrespondencia(button),
       display: {
-        '{bksp}': 'atras-borrar',
+        '{bksp}': 'borrar',
         '{enter}': '< enter',
         '@': 'at',
       },
@@ -496,7 +489,7 @@ export class InternoComponent implements OnInit {
       onChange: input => this.onChangeCorrespondencia(input),
       onKeyPress: button => this.onKeyPressCorrespondencia(button),
       display: {
-        '{bksp}': 'atras-borrar',
+        '{bksp}': 'borrar',
         '{enter}': '< enter',
         '@': 'at',
       },
@@ -517,7 +510,7 @@ export class InternoComponent implements OnInit {
       onChange: input => this.onChangeCarnet(input),
       onKeyPress: button => this.onKeyPressCarnet(button),
       display: {
-        '{bksp}': 'atras-borrar',
+        '{bksp}': 'borrar',
         '{enter}': '< enter',
         '@': 'at',
       },
