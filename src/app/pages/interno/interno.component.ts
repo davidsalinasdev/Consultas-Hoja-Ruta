@@ -141,7 +141,7 @@ export class InternoComponent implements OnInit {
         icon: 'error',
         title: 'Solicitud Inválida',
         text: 'Ningun campo debe estar vacio.',
-        footer: 'Sistema de Seguimiento a Trámitese'
+        footer: 'Sistema de Seguimiento a Trámites'
       })
     } else {
       // Mostrar Loader
@@ -189,7 +189,10 @@ export class InternoComponent implements OnInit {
 
                 if (elemento) {
                   // Desplazar hacia el elemento
-                  elemento.scrollIntoView({ behavior: 'smooth' });  // Puedes usar 'smooth' en lugar de 'auto' para un desplazamiento suave
+                  window.scrollTo({
+                    top: 450,
+                    behavior: 'smooth'
+                  });
                 }
               }, 0);
 
@@ -250,7 +253,7 @@ export class InternoComponent implements OnInit {
                 icon: 'error',
                 title: 'Solicitud Inválida',
                 text: 'No es una comunicación externa..!',
-                footer: 'Sistema de Seguimiento a Trámitese'
+                footer: 'Sistema de Seguimiento a Trámites'
               })
             }
           } else {
@@ -401,6 +404,10 @@ export class InternoComponent implements OnInit {
         '{bksp}': 'borrar',
         '{enter}': '< enter',
         '@': 'at',
+        '{space}': 'espacio',
+        '{shift}': 'shift',
+        '{tab}': 'tab',
+        '{lock}': 'lock'
       },
     });
 
@@ -419,6 +426,10 @@ export class InternoComponent implements OnInit {
         '{bksp}': 'borrar',
         '{enter}': '< enter',
         '@': 'at',
+        '{space}': 'espacio',
+        '{shift}': 'shift',
+        '{tab}': 'tab',
+        '{lock}': 'lock'
       },
     });
 
@@ -492,6 +503,10 @@ export class InternoComponent implements OnInit {
         '{bksp}': 'borrar',
         '{enter}': '< enter',
         '@': 'at',
+        '{space}': 'espacio',
+        '{shift}': 'shift',
+        '{tab}': 'tab',
+        '{lock}': 'lock'
       },
     });
     this.keyboardCorrespondencia!.setInput(event.target.value);
@@ -513,6 +528,10 @@ export class InternoComponent implements OnInit {
         '{bksp}': 'borrar',
         '{enter}': '< enter',
         '@': 'at',
+        '{space}': 'espacio',
+        '{shift}': 'shift',
+        '{tab}': 'tab',
+        '{lock}': 'lock'
       },
     });
     this.keyboardCarnet!.setInput(event.target.value);

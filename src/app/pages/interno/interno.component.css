@@ -292,6 +292,16 @@ ul.pagination li a:hover:not(.active) {
   display: none;
 }
 
-
+app-header-interno {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  /* Puedes ajustar el valor según sea necesario */
+  background-color: #fff;
+  /* Puedes ajustar el color de fondo según sea necesario */
+  /* Otros estilos que desees agregar */
+}
 
 /* FIN CSS INTERNO COMPONENT */

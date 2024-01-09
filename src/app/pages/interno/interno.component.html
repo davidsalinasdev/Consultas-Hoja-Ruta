@@ -1,8 +1,11 @@
 <!-- Menu -->
 <app-header-interno></app-header-interno>
-
+<br>
+<br>
+<br>
+<br>
 <div class="col-12 mt-5 mb-3 text-center">
-  <h1 class="mb-0 titulo-tramitexterno">Seguimiento a trámites según hoja de ruta</h1>
+  <h1 class="mb-0 titulo-tramitexterno">Seguimiento de trámite según hoja de ruta</h1>
   <img src="../../../assets/img/serparador.png" alt="" width="180">
 </div>
 
@@ -16,49 +19,22 @@
 
       <!-- Número de correspondencia -->
       <mat-form-field class="example-full-width align-self-center" appearance="outline">
-        <mat-label>Ingrese su Número de Correspondencia</mat-label>
+        <mat-label>Ingrese su número de hoja de ruta</mat-label>
         <div id="correspondenciaContainer">
           <input type="number" matInput formControlName="correspondencia"
             (input)="this.onInputChangeNroCorrespondencia($event)" [value]="this.correspondenciaValue"
             id="correspondenciaId" (click)="this.onClickCorrespondencia($event)" autocomplete="off">
         </div>
-        <!-- Validacion -->
-        <!-- Preguntamos si es invalido y si esta sucio o a sido tocado -->
-        <mat-hint
-          *ngIf="this.correspondencia?.invalid && (this.correspondencia?.dirty || this.correspondencia?.touched)">
-          <!-- Errores con expresiones regulares -->
-          <div *ngIf="this.correspondencia?.hasError('required')"
-            class="animate__animated animate__fadeIn fast text-danger" id="">
-            Este campo es requerido.
-          </div>
-          <div *ngIf="this.correspondencia?.hasError('pattern')"
-            class="animate__animated animate__fadeIn fast text-danger" id="">
-            Este campo solo admite números
-          </div>
-        </mat-hint>
       </mat-form-field>
       <!-- FIN Número de correspondencia -->
 
       <!-- Carnet de validacion -->
       <mat-form-field class="example-full-width align-self-center" appearance="outline">
-        <mat-label>Ingrese su Carnet</mat-label>
+        <mat-label>Ingrese su número de carnet</mat-label>
         <div id="carnetContainer">
           <input matInput formControlName="carnet" (input)="this.onInputChangeCarnet($event)"
             (click)="this.onClickCarnet($event)" [value]="this.carnetValue" id="carnetId" autocomplete="off">
         </div>
-        <!-- Validacion -->
-        <!-- Preguntamos si es invalido y si esta sucio o a sido tocado -->
-        <mat-hint *ngIf="this.carnet?.invalid && (this.carnet?.dirty || this.carnet?.touched)">
-          <!-- Errores con expresiones regulares -->
-          <div *ngIf="this.carnet?.hasError('required')" class="animate__animated animate__fadeIn fast text-danger"
-            id="">
-            Este campo es requerido.
-          </div>
-          <div *ngIf="this.carnet?.hasError('pattern')" class="animate__animated animate__fadeIn fast text-danger"
-            id="">
-            Este campo solo admite números, letras y guion.
-          </div>
-        </mat-hint>
       </mat-form-field>
       <!-- FIN Carnet de validacion -->
 
